@@ -1,13 +1,13 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "./build/api/index.js",
+  "main": "./dist/api/index.js",
   "type": "module",
   "scripts": {
     "start": "node dist/index.js",
     "build": "npx tsc",
     "serve": "node dist/index.js",
-    "dev": "nodemon api/index.ts",
+    "dev": "nodemon --exec ts-node --experimental-specifier-resolution=node api/index.ts",
     "lint": "eslint --ext .ts ./api",
     "lint:fix": "eslint --ext .ts ./api --fix",
     "format": "prettier --write \"api/**/*.ts\"",
