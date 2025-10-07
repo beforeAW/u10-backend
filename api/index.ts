@@ -1,12 +1,12 @@
 import express from "express";
 import cors from "cors";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
+import connectDB from "./database/db.js";
 
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port: number = parseInt(process.env.PORT || "3000", 10);
 
 // Middleware
 app.use(cors());
@@ -17,17 +17,12 @@ app.get("/", (_req, res) => {
   res.send("API is running!");
 });
 
-// MongoDB connection
-const mongoUri = process.env.MONGO_URI || "mongodb://localhost:27017/mydb";
-mongoose
-  .connect(mongoUri)
+connectDB()
   .then(() => {
-    console.log("Connected to MongoDB");
-    // Start server after DB connection
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+    app.listen(port, () => {
+      console.log(`Server running at http://localhost:${port}`);
     });
   })
   .catch((err) => {
-    console.error("MongoDB connection error:", err);
+    console.error("Failed to start server:", err);
   });
